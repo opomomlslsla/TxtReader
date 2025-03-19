@@ -1,8 +1,6 @@
-﻿namespace TxtReader.Services.Interfaces
+﻿namespace TxtReader.Services.Interfaces;
+
+public interface IInputFileProcessor
 {
-    public interface IInputFileProcessor
-    {
-        void ProcessInputFile(string path, string fileName);
-        void Run();
-    }
+    Task Run();
 }

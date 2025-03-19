@@ -1,7 +1,6 @@
-﻿namespace TxtReader.Services.Interfaces
+﻿namespace TxtReader.Services.Interfaces;
+
+public interface IFileReader
 {
-    public interface IFileReader
-    {
-        string ReadFirstNonEmptyLine(string filePath);
-    }
+    Task<string> ReadFirstNonEmptyLineAsync(string filePath);
 }

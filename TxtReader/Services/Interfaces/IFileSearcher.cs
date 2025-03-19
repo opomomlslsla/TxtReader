@@ -1,7 +1,6 @@
-﻿namespace TxtReader.Services.Interfaces
+﻿namespace TxtReader.Services.Interfaces;
+
+public interface IFileSearcher
 {
-    public interface IFileSearcher
-    {
-        string FindInputFile(string directoryPath, string fileName);
-    }
+    string FindInputFilePath(string directoryPath, string fileName);
 }

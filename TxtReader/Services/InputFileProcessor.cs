@@ -1,8 +1,6 @@
-﻿namespace TxtReader.Services;
+﻿using TxtReader.Services.Interfaces;
 
-using System;
-using Microsoft.Extensions.DependencyInjection;
-using TxtReader.Services.Interfaces;
+namespace TxtReader.Services;
 
 public class InputFileProcessor : IInputFileProcessor
 {
@@ -15,28 +13,25 @@ public class InputFileProcessor : IInputFileProcessor
         _fileReader = fileReader;
     }
 
-    public void ProcessInputFile(string path, string fileName)
+    public async Task ProcessInputFileAsync(string path, string fileName)
     {
-        string filePath = _fileSearcher.FindInputFile(path, fileName);
+        string filePath = _fileSearcher.FindInputFilePath(path, fileName);
         if (filePath == null)
         {
             Console.WriteLine($"Ошибка: Файл {fileName} не найден в указанной директории.");
             return;
         }
 
-        string firstNonEmptyLine = _fileReader.ReadFirstNonEmptyLine(filePath);
-        if (!string.IsNullOrEmpty(firstNonEmptyLine))
-        {
-            Console.WriteLine("Первая непустая строка:");
-            Console.WriteLine(firstNonEmptyLine);
-        }
-        else
+        string firstNonEmptyLine = await _fileReader.ReadFirstNonEmptyLineAsync(filePath);
+        if (string.IsNullOrEmpty(firstNonEmptyLine))
         {
             Console.WriteLine("Файл пуст.");
         }
+        Console.WriteLine("Первая непустая строка:");
+        Console.WriteLine(firstNonEmptyLine);
     }
 
-    public void Run()
+    public async Task Run()
     {
         while (true)
         {
@@ -61,7 +56,7 @@ public class InputFileProcessor : IInputFileProcessor
                 Console.WriteLine("Завершение работы.");
                 break;
             }
-            ProcessInputFile(filePath, fileName);
+            await ProcessInputFileAsync(filePath, fileName);
         }
     }
 }

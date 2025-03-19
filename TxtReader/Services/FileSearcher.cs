@@ -1,20 +1,17 @@
-﻿namespace TxtReader.Services;
+﻿using TxtReader.Services.Interfaces;
 
-using System.IO;
-using TxtReader.Services.Interfaces;
+namespace TxtReader.Services;
 
 public class FileSearcher : IFileSearcher
 {
-    public string FindInputFile(string directoryPath, string fileName)
+    public string? FindInputFilePath(string path, string fileName)
     {
-        if (File.Exists(directoryPath) && Path.GetFileName(directoryPath).Equals(fileName, StringComparison.OrdinalIgnoreCase))
-            return directoryPath;
-        if (!Directory.Exists(directoryPath))
-        {
+        if (File.Exists(path) && Path.GetFileName(path).Equals(fileName, StringComparison.OrdinalIgnoreCase))
+            return path;
+        if (!Directory.Exists(path))
             return null;
-        }
-        var files = Directory.EnumerateFiles(directoryPath, fileName, SearchOption.AllDirectories);
-        return files.FirstOrDefault(); // Возвращает первый найденный файл или null
+        var files = Directory.EnumerateFiles(path, fileName, SearchOption.AllDirectories);
+        return files.FirstOrDefault();
     }
 }
 

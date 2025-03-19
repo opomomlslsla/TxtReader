@@ -1,24 +1,21 @@
-﻿namespace TxtReader.Services;
+﻿using TxtReader.Services.Interfaces;
 
-using System.IO;
-using TxtReader.Services.Interfaces;
+namespace TxtReader.Services;
 
 public class FileReader : IFileReader
 {
-    public string ReadFirstNonEmptyLine(string filePath)
+    public async Task<string?> ReadFirstNonEmptyLineAsync(string filePath)
     {
-        using (var reader = new StreamReader(filePath))
+        using var reader = new StreamReader(filePath);
+        string line;
+        while ((line = await reader.ReadLineAsync()) != null)
         {
-            string line;
-            while ((line = reader.ReadLine()) != null)
+            if (!string.IsNullOrWhiteSpace(line))
             {
-                if (!string.IsNullOrWhiteSpace(line))
-                {
-                    return line;
-                }
+                return line;
             }
         }
-        return null; // Файл пуст или не существует
+        return null;
     }
 }
 
