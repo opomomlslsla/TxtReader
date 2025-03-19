@@ -4,7 +4,7 @@ using System;
 using Microsoft.Extensions.DependencyInjection;
 using TxtReader.Services.Interfaces;
 
-public class InputFileProcessor
+public class InputFileProcessor : IInputFileProcessor
 {
     private readonly IFileSearcher _fileSearcher;
     private readonly IFileReader _fileReader;

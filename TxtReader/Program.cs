@@ -10,10 +10,10 @@ class Program
         var serviceProvider = new ServiceCollection()
             .AddSingleton<IFileSearcher, FileSearcher>()
             .AddSingleton<IFileReader, FileReader>()
-            .AddSingleton<InputFileProcessor>()
+            .AddSingleton<IInputFileProcessor,InputFileProcessor>()
             .BuildServiceProvider();
 
-        var processor = serviceProvider.GetRequiredService<InputFileProcessor>();
+        var processor = serviceProvider.GetRequiredService<IInputFileProcessor>();
         processor.Run();
     }
 }
