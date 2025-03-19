@@ -1,0 +1,19 @@
+﻿using System;
+using Microsoft.Extensions.DependencyInjection;
+using TxtReader.Services.Interfaces;
+using TxtReader.Services;
+
+class Program
+{
+    static void Main()
+    {
+        var serviceProvider = new ServiceCollection()
+            .AddSingleton<IFileSearcher, FileSearcher>()
+            .AddSingleton<IFileReader, FileReader>()
+            .AddSingleton<InputFileProcessor>()
+            .BuildServiceProvider();
+
+        var processor = serviceProvider.GetRequiredService<InputFileProcessor>();
+        processor.Run();
+    }
+}
