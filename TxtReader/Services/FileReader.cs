@@ -7,7 +7,7 @@ public class FileReader : IFileReader
 {
     public string ReadFirstNonEmptyLine(string filePath)
     {
-        using (StreamReader reader = new StreamReader(filePath))
+        using (var reader = new StreamReader(filePath))
         {
             string line;
             while ((line = reader.ReadLine()) != null)
